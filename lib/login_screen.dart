@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_login/home_screen.dart';
+import 'package:shared_preferences_login/main.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -24,6 +27,10 @@ class _LogInScreenState extends State<LogInScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Icon(Icons.account_circle, size: 80, color: Colors.blue),
+              const SizedBox(
+                height: 15,
+              ),
               TextField(
                 decoration: InputDecoration(
                     label: const Text('Email'),
@@ -31,7 +38,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         borderRadius: BorderRadius.circular(15))),
               ),
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               TextField(
                 decoration: InputDecoration(
@@ -41,8 +48,20 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 15,
+              ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  var sharedPref = await SharedPreferences.getInstance();
+
+                  sharedPref.setBool(SplashScreenState.keyName, true);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
+                },
                 child: const Text('Login'),
               ),
             ],
